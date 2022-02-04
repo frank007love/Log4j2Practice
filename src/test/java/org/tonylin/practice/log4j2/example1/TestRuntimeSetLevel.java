@@ -9,30 +9,13 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.tonylin.practice.log4j2.AbstractLog4j2Test;
 
-import nl.altindag.console.ConsoleCaptor;
-
-public class TestRuntimeSetLevel {
-
-    private ConsoleCaptor captor;
-
-    @Before
-    public void setup() {
-        captor = new ConsoleCaptor();
-        Configurator.reconfigure();
-        
-    }
-
-    @After
-    public void teardown() {
-      captor.close();
-    }
+public class TestRuntimeSetLevel extends AbstractLog4j2Test {
     
     @Test
-    public void Should_Console_When_LogDebugAfterChangingLogLevelWithConfigurator() {
+    public void Should_SystemOutToConsole_When_LogDebugAfterChangingLogLevelWithConfigurator() {
         Configurator.setLevel(TestLogger.class.getName(), Level.DEBUG);
         
         TestLogger.debug("test debug");
@@ -41,7 +24,7 @@ public class TestRuntimeSetLevel {
     }
 
     @Test
-    public void Should_Console_When_LogDebugAfterChangingLogLevel() {
+    public void Should_SystemOutToConsole_When_LogDebugAfterChangingLogLevel() {
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration config = ctx.getConfiguration();
         LoggerConfig loggerConfig = config.getLoggerConfig(TestLogger.class.getName());
@@ -54,13 +37,13 @@ public class TestRuntimeSetLevel {
     }
 
     @Test
-    public void Should_NotConsole_When_LogDebugWithDefaultConfiguration() {   
+    public void Should_NotSystemOutToConsole_When_LogDebugWithDefaultConfiguration() {   
         TestLogger.debug("test debug");
         assertEquals(0, captor.getStandardOutput().size());
     }
 
     @Test
-    public void Should_Console_When_LogErrorWithDefaultConfiguration() {
+    public void Should_SystemOutToConsole_When_LogErrorWithDefaultConfiguration() {
         TestLogger.error("test error");
         assertEquals(1, captor.getStandardOutput().size());
         assertTrue(captor.getStandardOutput().get(0).contains("test error"));
