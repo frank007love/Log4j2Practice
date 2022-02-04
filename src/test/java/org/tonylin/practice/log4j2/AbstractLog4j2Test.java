@@ -1,5 +1,7 @@
 package org.tonylin.practice.log4j2;
 
+import java.io.File;
+
 import org.apache.logging.log4j.core.config.Configurator;
 import org.junit.After;
 import org.junit.Before;
@@ -12,11 +14,11 @@ public abstract class AbstractLog4j2Test {
     @Before
     public void setup() {
         captor = new ConsoleCaptor();
-        Configurator.reconfigure();
     }
 
     @After
     public void teardown() {
         captor.close();
+        Configurator.reconfigure(new File("src/main/java/log4j2.properties").toURI());
     }
 }
