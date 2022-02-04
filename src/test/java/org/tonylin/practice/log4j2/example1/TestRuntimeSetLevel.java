@@ -30,6 +30,15 @@ public class TestRuntimeSetLevel {
     public void teardown() {
       captor.close();
     }
+    
+    @Test
+    public void Should_Console_When_LogDebugAfterChangingLogLevelWithConfigurator() {
+        Configurator.setLevel(TestLogger.class.getName(), Level.DEBUG);
+        
+        TestLogger.debug("test debug");
+        assertEquals(1, captor.getStandardOutput().size());
+        assertTrue(captor.getStandardOutput().get(0).contains("test debug"));
+    }
 
     @Test
     public void Should_Console_When_LogDebugAfterChangingLogLevel() {
