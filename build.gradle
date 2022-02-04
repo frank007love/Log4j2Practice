@@ -1,0 +1,19 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+}
+
+jar {
+    baseName = 'Log4j2Practice'
+    version =  '0.1.0'
+}
+
+dependencies {
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.github.hakky54:consolecaptor:1.0.2'
+}
+    
+repositories {
+    mavenCentral()
+}
